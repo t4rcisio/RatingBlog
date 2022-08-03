@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  UseriD    String   @unique
+  Password  String
+}
+
+model Companie {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  AuthorId  String
+  Name      String   @unique
+  Origem    String
+  Category  String
+  Rating    Float
+}
+
+model Rating_Comapine {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  AuthorId   String
+  Salary     Float
+  TypeWork   TypeWork
+  Beneficies String[]
+  Contract   Contract
+  Position   String
+  WeekHours  Float
+  Rating     Float
+  Comment    String
+}
+
+model Professor {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Name      String
+  Rating    Float
+}
+
+model Rating_Companie {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Professor String
+  Course    String
+  Year      String
+  Comment   String
+  Rating    Float
+}
+
+enum Contract {
+  Estagio
+  Emprego
+}
+
+enum TypeWork {
+  Presencial
+  Remoto
+  Hibrido
+}
