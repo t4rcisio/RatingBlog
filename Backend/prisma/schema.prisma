@@ -42,6 +42,8 @@ model Rating_Comapine {
   WeekHours  Float
   Rating     Float
   Comment    String
+  like       Int
+  Unlike     Int
 }
 
 model Professor {
@@ -61,6 +63,8 @@ model Rating_Companie {
   Year      String
   Comment   String
   Rating    Float
+  like      Int
+  Unlike    Int
 }
 
 enum Contract {
