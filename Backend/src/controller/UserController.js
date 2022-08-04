@@ -1,7 +1,12 @@
 import bcrypt from "bcryptjs";
+import jsonwebtoken from "jsonwebtoken"
+import dotenv from "dotenv"
+
 
 import Controller from "./Controller";
 
+
+dotenv.config()
 class UserController extends Controller {
   constructor() {
     super("User");
@@ -59,6 +64,21 @@ class UserController extends Controller {
       },
     };
 
-    const FindUser = await super.GetByID(params);
+    const findUser = await super.GetOne(params);
+
+    if (findUser.error) return response.status(500).send("Login server Error");
+
+    if (findUser.data.UserID != UserId)
+      return response.status(404).send("Incorrect nick or password");
+
+    const hashPassword = findUser.data.Password;
+    const hash = bcrypt.compareSync(Password, hashPassword);
+    if (!hash) return response.status(404).send("Incorrect nick or password");
+
+    const payload = {
+        Id: findUser.data.id
+        Perm:
+    }
+
   }
 }
