@@ -16,6 +16,8 @@ model User {
   updatedAt DateTime @updatedAt
   UserId    String   @unique
   Password  String
+  UserType  UserType @default(USER)
+  Score     Int      @default(0)
 }
 
 model Companie {
@@ -26,24 +28,25 @@ model Companie {
   Name      String   @unique
   Origem    String
   Category  String
-  Rating    Float
+  Rating    Float    @default(0)
 }
 
-model Rating_Comapine {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  AuthorId   String
-  Salary     Float
-  TypeWork   TypeWork
-  Beneficies String[]
-  Contract   Contract
-  Position   String
-  WeekHours  Float
-  Rating     Float
-  Comment    String
-  like       Int
-  Unlike     Int
+model Rating_Company {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  AuthorId  String
+  CompanyId String
+  Salary    Float
+  TypeWork  TypeWork
+  Benefits  String[] @default([])
+  Contract  Contract
+  Position  String
+  WeekHours Float
+  Rating    Float
+  Comment   String   @default("")
+  like      String[] @default([])
+  Unlike    String[] @default([])
 }
 
 model Professor {
@@ -51,20 +54,21 @@ model Professor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Name      String
-  Rating    Float
+  Rating    Float    @default(0)
 }
 
-model Rating_Companie {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Professor String
-  Course    String
-  Year      String
-  Comment   String
-  Rating    Float
-  like      Int
-  Unlike    Int
+model Rating_Professor {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  AuthorId    String
+  ProfessorID String
+  Course      String
+  Year        String
+  Comment     String   @default("")
+  Rating      Float
+  like        String[] @default([])
+  Unlike      String[] @default([])
 }
 
 enum Contract {
@@ -76,4 +80,10 @@ enum TypeWork {
   Presencial
   Remoto
   Hibrido
+}
+
+enum UserType {
+  USER
+  ADM
+  MODERATOR
 }
